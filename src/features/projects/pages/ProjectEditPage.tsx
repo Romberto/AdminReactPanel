@@ -4,6 +4,7 @@ import { useGetProjectBySlugQuery, useUpdateProjectMutation } from '../../../api
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
+import ImageGallery from '../components/ImageGallery'
 
 const schema = z.object({
   title: z.string().min(1).optional(),
@@ -28,7 +29,7 @@ export default function ProjectEditPage() {
       slug: project.slug,
       description: project.description ?? undefined,
       is_published: project.is_published,
-      preview_image_id: project.preview_image_id ?? undefined
+      preview_image_id: project.preview_image_id ?? undefined,
     })
   }, [project])
 
@@ -42,7 +43,6 @@ export default function ProjectEditPage() {
   }
 
   if (!project) return <div>Loading...</div>
-
   return (
     <div className="p-6">
       <h1 className="text-2xl mb-4">Edit project</h1>
@@ -58,6 +58,10 @@ export default function ProjectEditPage() {
         </div>
         <button className="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Save</button>
       </form>
+      {project?.images && (
+        <ImageGallery projectId={project.id} images={project.images} />
+      )}
+
     </div>
   )
 }

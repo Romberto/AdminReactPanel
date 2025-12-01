@@ -40,7 +40,7 @@ export default function ImageReorder({ images: initial = [], projectId, onReorde
       <div className="grid grid-cols-3 gap-2">
         {items.map((img, idx) => (
           <div key={img.id} draggable onDragStart={(e)=>onDragStart(e, idx)} onDragOver={onDragOver} onDrop={(e)=>onDrop(e, idx)} className="border p-1">
-            <img src={`${import.meta.env.VITE_API_URL}/${img.file_path}`} className="w-full h-32 object-cover" alt={img.caption || ''} />
+            <img src={`${img.file_path}`} className="w-full h-32 object-cover" alt={img.caption || ''} />
             <div className="text-xs mt-1">#{img.id} • order: {idx}</div>
           </div>
         ))}

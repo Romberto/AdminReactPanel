@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom'
 const ProjectCard: React.FC<{ project: ProjectRead }> = ({ project }) => {
   return (
     <div className="border rounded shadow hover:shadow-md overflow-hidden">
-      <Link to={`/projects/${project.slug}`}>
+      <Link to={`/projects/${project.slug}/edit`}>
         <div className="h-48 bg-slate-100 flex items-center justify-center">
           {project.preview_image_id ? (
-            <img src={`${import.meta.env.VITE_API_URL}/media/${project.preview_image_id}`} alt={project.title} className="h-full w-full object-cover" />
+            <img src={project.images?.[0]?.file_path || '/fallback-image.png'} alt={project.title} className="h-full w-full object-cover" />
           ) : (
             <div className="text-slate-400">No preview</div>
           )}

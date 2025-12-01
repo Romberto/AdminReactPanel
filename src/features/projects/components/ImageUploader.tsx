@@ -45,7 +45,6 @@ export default function ImageUploader({ projectId, onUploaded }: Props) {
     setPreviews([])
     onUploaded && onUploaded()
   }
-
   return (
     <div className="p-2 border rounded">
       <label className="block mb-2">Upload images (multiple)</label>

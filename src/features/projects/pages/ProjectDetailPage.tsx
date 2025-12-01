@@ -45,13 +45,13 @@ export default function ProjectDetailPage() {
       <div className="mb-6">
         <h3 className="font-semibold mb-2">Images</h3>
         <ImageUploader projectId={project.id} onUploaded={() => refetch()} />
-        <div className="mt-4">
+        {/* <div className="mt-4">
           <ImageReorder images={project.images ?? []} projectId={project.id} onReordered={() => refetch()} />
-        </div>
+        </div> */}
         <div className="grid grid-cols-3 gap-2 mt-4">
           {project.images?.map(img => (
             <div key={img.id} className="border p-2">
-              <img src={`${import.meta.env.VITE_API_URL}/${img.file_path}`} alt={img.caption || ''} className="w-full h-40 object-cover" />
+              <img src={`${img.file_path}`} alt={img.caption || ''} className="w-full h-40 object-cover" />
               <div className="flex justify-between mt-2">
                 <button className="text-sm text-red-600" onClick={() => { if(confirm('Delete image?')) { deleteImage({ project_id: project.id, image_id: img.id }); refetch(); } }}>Delete</button>
               </div>

@@ -7,7 +7,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
   const token = useSelector((s: RootState) => s.auth.token)
   const isAdmin = useSelector((s: RootState) => s.auth.isAdmin)
   const location = useLocation()
-  if (!token || !isAdmin) {
+  if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />
   }
   return <>{children}</>
