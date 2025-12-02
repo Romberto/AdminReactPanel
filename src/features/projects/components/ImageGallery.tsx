@@ -28,7 +28,7 @@ export default function ImageGallery({ projectId, images }: Props) {
             onClick={() => setSelected(img)}
           >
             <img
-              src={`${img.file_path}`}
+              src={`${img.public_url}`}
               alt={img.caption || ''}
               className="w-full h-40 object-cover rounded-lg shadow-sm"
             />

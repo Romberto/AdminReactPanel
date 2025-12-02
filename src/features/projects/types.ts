@@ -1,10 +1,11 @@
 export interface ImageRead {
   id: number
   project_id: number
-  file_path: string
+  public_url: string
   caption?: string | null
   ordering: number
   uploaded_at: string
+  is_preview: boolean
 }
 
 export interface ProjectRead {

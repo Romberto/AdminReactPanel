@@ -32,6 +32,7 @@ export default function ProjectDetailPage() {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl">{project.title}</h1>
         <div className="flex gap-2">
+          <a className="text-blue-600" href={`/dashboard`}>Home</a>
           <a className="text-blue-600" href={`/projects/${project.slug}/edit`}>Edit</a>
           <button className="text-red-600" onClick={handleDelete}>Delete</button>
         </div>
@@ -51,7 +52,7 @@ export default function ProjectDetailPage() {
         <div className="grid grid-cols-3 gap-2 mt-4">
           {project.images?.map(img => (
             <div key={img.id} className="border p-2">
-              <img src={`${img.file_path}`} alt={img.caption || ''} className="w-full h-40 object-cover" />
+              <img src={`${img.public_url}`} alt={img.caption || ''} className="w-full h-40 object-cover" />
               <div className="flex justify-between mt-2">
                 <button className="text-sm text-red-600" onClick={() => { if(confirm('Delete image?')) { deleteImage({ project_id: project.id, image_id: img.id }); refetch(); } }}>Delete</button>
               </div>
