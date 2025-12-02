@@ -54,7 +54,7 @@ export default function ImageGallery({ projectId, images }: Props) {
           onClick={() => setSelected(null)}
         >
           <img
-            src={`${selected.file_path}`}
+            src={`${selected.public_url}`}
             alt=""
             className="max-w-full max-h-full rounded-lg"
           />
