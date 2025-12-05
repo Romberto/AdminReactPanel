@@ -47,6 +47,10 @@ export const projectsApi = api.injectEndpoints({
     reorderImages: build.mutation<{ message: string }, { project_id: number; orders: Record<number, number> }>({
       query: ({ project_id, orders }) => ({ url: `/api/v1/admin/projects/${project_id}/images/reorder`, method: 'POST', body: orders }),
       invalidatesTags: ['Images', 'Projects']
+    }),
+    isPreviewImages: build.mutation<{ message: string }, { project_id: number; image_id: number }>({
+      query: ({ project_id, image_id }) => ({ url: `/api/v1/admin/projects/${project_id}/images/ispreview/${image_id}`, method: 'POST' }),
+      invalidatesTags: ['Images', 'Projects']
     })
   })
 })
@@ -59,5 +63,6 @@ export const {
   useDeleteProjectMutation,
   useUploadImageMutation,
   useDeleteImageMutation,
-  useReorderImagesMutation
+  useReorderImagesMutation,
+  useIsPreviewImagesMutation
 } = projectsApi
