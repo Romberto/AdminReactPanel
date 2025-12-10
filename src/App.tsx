@@ -8,6 +8,7 @@ import ProjectCreatePage from './features/projects/pages/ProjectCreatePage'
 import ProjectEditPage from './features/projects/pages/ProjectEditPage'
 import ProtectedRoute from './features/auth/components/ProtectedRoute'
 import Header from './features/header/components/Header'
+import BlogListPage from './features/blog/pages/BlogListPage'
 
 export default function App() {
   return (
@@ -25,6 +26,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <ProjectListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/blogs"
+            element={
+              <ProtectedRoute>
+                <BlogListPage />
               </ProtectedRoute>
             }
           />
@@ -58,5 +67,5 @@ export default function App() {
         </Routes>
       </div>
     </div>
-  );
+  )
 }
