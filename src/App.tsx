@@ -9,6 +9,8 @@ import ProjectEditPage from './features/projects/pages/ProjectEditPage'
 import ProtectedRoute from './features/auth/components/ProtectedRoute'
 import Header from './features/header/components/Header'
 import BlogListPage from './features/blog/pages/BlogListPage'
+import BlogEditPage from './features/blog/pages/BlogEditPage'
+import BlogDetailPage from './features/blog/pages/BlogDetailPage'
 
 export default function App() {
   return (
@@ -39,6 +41,15 @@ export default function App() {
           />
 
           <Route
+            path="/blogs/:slug"
+            element={
+              <ProtectedRoute>
+                <BlogDetailPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/projects/create"
             element={
               <ProtectedRoute>
@@ -61,6 +72,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <ProjectEditPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/blogs/:slug/edit"
+            element={
+              <ProtectedRoute>
+                <BlogEditPage />
               </ProtectedRoute>
             }
           />

@@ -18,3 +18,11 @@ export interface BlogsRead {
   updated_at: string
   images?: BlogsImageRead[]
 }
+
+export interface BlogUpdate {
+    title?: string
+    slug?: string
+    description?: string | null
+    is_published?: boolean
+    preview_image_id?: number | null
+  }
