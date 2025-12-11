@@ -1,5 +1,5 @@
 import { api } from './base'
-import { BlogsImageRead, BlogsRead, BlogUpdate } from '../features/blog/types'
+import { BlogCreate, BlogsImageRead, BlogsRead, BlogUpdate } from '../features/blog/types'
 
 
 
@@ -49,6 +49,10 @@ export const blogsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['BlogsImages', 'Blogs'],
     }),
+    createBlog: build.mutation<BlogsRead, BlogCreate>({
+      query: (body) => ({ url: '/api/v1/admin/blogs', method: 'POST', body }),
+      invalidatesTags: ['Blogs'],
+    }),
   }),
 })
 export const {
@@ -57,5 +61,6 @@ export const {
   useUpdateBlogMutation,
   useUploadBlogImageMutation,
   useDeleteBlogImageMutation,
+  useCreateBlogMutation,
 } = blogsApi
 

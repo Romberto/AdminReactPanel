@@ -26,3 +26,11 @@ export interface BlogUpdate {
     is_published?: boolean
     preview_image_id?: number | null
   }
+
+  export interface BlogCreate {
+    title: string
+    slug: string
+    description?: string
+    is_published?: boolean
+  }
+  
