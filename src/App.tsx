@@ -9,6 +9,12 @@ import ProjectEditPage from './features/projects/pages/ProjectEditPage'
 import ProtectedRoute from './features/auth/components/ProtectedRoute'
 import Header from './features/header/components/Header'
 
+import BlogListPage from './features/blog/pages/BlogListPage'
+import BlogEditPage from './features/blog/pages/BlogEditPage'
+import BlogDetailPage from './features/blog/pages/BlogDetailPage'
+import BlogCreatePage from './features/blog/pages/BlogCreatePage'
+
+
 export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -25,6 +31,32 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <ProjectListPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/blogs"
+            element={
+              <ProtectedRoute>
+                <BlogListPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/blogs/:slug"
+            element={
+              <ProtectedRoute>
+                <BlogDetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/blogs/create"
+            element={
+              <ProtectedRoute>
+                <BlogCreatePage />
               </ProtectedRoute>
             }
           />
@@ -55,8 +87,12 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
         </Routes>
       </div>
     </div>
   );
+
+
+
 }
