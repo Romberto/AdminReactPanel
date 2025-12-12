@@ -9,6 +9,7 @@ import ProjectEditPage from './features/projects/pages/ProjectEditPage'
 import ProtectedRoute from './features/auth/components/ProtectedRoute'
 import Header from './features/header/components/Header'
 
+
 import BlogListPage from './features/blog/pages/BlogListPage'
 import BlogEditPage from './features/blog/pages/BlogEditPage'
 import BlogDetailPage from './features/blog/pages/BlogDetailPage'
@@ -52,6 +53,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/blogs/create"
             element={
@@ -60,6 +62,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
 
           <Route
             path="/projects/create"
@@ -87,12 +90,19 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-
+          <Route
+            path="/blogs/:slug/edit"
+            element={
+              <ProtectedRoute>
+                <BlogEditPage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </div>
   );
 
-
-
 }
+
+
