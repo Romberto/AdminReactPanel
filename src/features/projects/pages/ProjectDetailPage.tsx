@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import {
   useGetProjectBySlugQuery,
   useDeleteProjectMutation,
@@ -7,43 +7,38 @@ import {
   useDeleteImageMutation,
   useReorderImagesMutation,
   useIsPreviewImagesMutation,
-} from "../../../api/projectsApi";
-import ImageUploader from "../components/ImageUploader";
+} from '../../../api/projectsApi'
+import ImageUploader from '../components/ImageUploader'
 
 export default function ProjectDetailPage() {
-  const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
-  const { data: project, isLoading, refetch } = useGetProjectBySlugQuery(slug!);
-  const [deleteProject] = useDeleteProjectMutation();
-  const [uploadImage] = useUploadImageMutation();
-  const [deleteImage] = useDeleteImageMutation();
-  const [reorderImages] = useReorderImagesMutation();
-  const [isPreviewImage] = useIsPreviewImagesMutation();
+  const { slug } = useParams<{ slug: string }>()
+  const navigate = useNavigate()
+  const { data: project, isLoading, refetch } = useGetProjectBySlugQuery(slug!)
+  const [deleteProject] = useDeleteProjectMutation()
+  const [uploadImage] = useUploadImageMutation()
+  const [deleteImage] = useDeleteImageMutation()
+  const [reorderImages] = useReorderImagesMutation()
+  const [isPreviewImage] = useIsPreviewImagesMutation()
 
   // ⭐ локальный стейт для мгновенного отображения бордера
-  const [previewId, setPreviewId] = useState<number | null>(null);
+  const [previewId, setPreviewId] = useState<number | null>(null)
 
   // Устанавливаем previewId при загрузке
   useEffect(() => {
     if (project?.images) {
-      const previewImg = project.images.find((img) => img.is_preview);
-      setPreviewId(previewImg ? previewImg.id : null);
+      const previewImg = project.images.find(img => img.is_preview)
+      setPreviewId(previewImg ? previewImg.id : null)
     }
-  }, [project]);
+  }, [project])
 
-  if (isLoading) return <div>Loading...</div>;
-  if (!project) return <div>Not found</div>;
+  if (isLoading) return <div>Loading...</div>
+  if (!project) return <div>Not found</div>
 
   const handleDelete = async () => {
-    if (!confirm("Delete project?")) return;
-    await deleteProject(project.id);
-    navigate("/dashboard");
-  };
-
-  const handleFile = async (file: File) => {
-    await uploadImage({ project_id: project.id, file });
-    refetch();
-  };
+    if (!confirm('Delete project?')) return
+    await deleteProject(project.id)
+    navigate('/dashboard')
+  }
 
   return (
     <div className="p-6">
@@ -70,19 +65,23 @@ export default function ProjectDetailPage() {
       <div className="mb-6">
         <h3 className="font-semibold mb-2">Images</h3>
 
-        <ImageUploader projectId={project.id} onUploaded={() => refetch()} />
+        <ImageUploader
+          projectSlug={project.slug}
+          projectId={project.id}
+          onUploaded={() => refetch()}
+        />
 
         <div className="grid grid-cols-3 gap-2 mt-4">
-          {project.images?.map((img) => (
+          {project.images?.map(img => (
             <div
               key={img.id}
               className={`p-2 border ${
-                previewId === img.id ? "border-4 border-yellow-400" : "border"
+                previewId === img.id ? 'border-4 border-yellow-400' : 'border'
               }`}
             >
               <img
                 src={img.public_url}
-                alt={img.caption || ""}
+                alt={img.caption || ''}
                 className="w-full h-40 object-cover"
               />
 
@@ -91,9 +90,9 @@ export default function ProjectDetailPage() {
                 <button
                   className="text-sm text-red-600"
                   onClick={() => {
-                    if (confirm("Delete image?")) {
-                      deleteImage({ project_id: project.id, image_id: img.id });
-                      refetch();
+                    if (confirm('Delete image?')) {
+                      deleteImage({ project_id: project.id, image_id: img.id })
+                      refetch()
                     }
                   }}
                 >
@@ -108,13 +107,13 @@ export default function ProjectDetailPage() {
                     await isPreviewImage({
                       project_id: project.id,
                       image_id: img.id,
-                    });
+                    })
 
                     // 2. мгновенно показываем жёлтую рамку
-                    setPreviewId(img.id);
+                    setPreviewId(img.id)
 
                     // 3. обновляем проект с сервера
-                    refetch();
+                    refetch()
                   }}
                 >
                   Is preview
@@ -125,5 +124,5 @@ export default function ProjectDetailPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

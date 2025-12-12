@@ -3,7 +3,8 @@ import { useUploadImageMutation } from '../../../api/projectsApi'
 import { supabase } from '../../../lib/supabaseClient'
 
 type Props = {
-  projectId: number
+  projectSlug: string,
+  projectId:number,
   onUploaded?: () => void
 }
 
@@ -23,7 +24,7 @@ async function loginUser({ email, password }: { email: string; password: string 
 const SUPABASE_EMAIL = import.meta.env.VITE_SUPABASE_EMAIL
 const SUPABASE_PASSWORD = import.meta.env.VITE_SUPABASE_PASSWORD
 
-export default function ImageUploader({ projectId, onUploaded }: Props) {
+export default function ImageUploader({ projectSlug, projectId, onUploaded }: Props) {
   const [files, setFiles] = useState<File[]>([])
   const [previews, setPreviews] = useState<string[]>([])
   const [progress, setProgress] = useState<Record<string, number>>({})
@@ -98,7 +99,7 @@ export default function ImageUploader({ projectId, onUploaded }: Props) {
         setProgress(prev => ({ ...prev, [file.name]: 30 }))
 
         // 2) Upload to supabase storage
-        const filePath = `${projectId}/${newFileName}`
+        const filePath = `${projectSlug}/${newFileName}`
 
         const { error: uploadErr } = await supabase
           .storage
@@ -118,13 +119,13 @@ export default function ImageUploader({ projectId, onUploaded }: Props) {
           .getPublicUrl(filePath)
 
         const public_url = publicData.publicUrl
-
-        // // 4) Send metadata to backend via RTK Mutation
-        // await uploadImage({
-        //   project_id: projectId,
-        //   public_url,
-        //   file_path: filePath
-        // }).unwrap()
+        console.log(public_url)
+        // 4) Send metadata to backend via RTK Mutation
+        await uploadImage({
+          project_id: projectId,
+          public_url,
+          path_to_file: filePath
+        }).unwrap()
 
         setProgress(prev => ({ ...prev, [file.name]: 100 }))
       } catch (err) {

@@ -26,12 +26,12 @@ export const projectsApi = api.injectEndpoints({
       query: (project_id) => ({ url: `/api/v1/admin/projects/${project_id}`, method: 'DELETE' }),
       invalidatesTags: ['Projects']
     }),
-    uploadImage: build.mutation<ImageRead, { project_id: number; caption?: string; ordering?: number, public_url: string , file_path: string }>({
-      query: ({ project_id, caption, ordering, public_url, file_path }) => {
+    uploadImage: build.mutation<ImageRead, { project_id: number, public_url: string , path_to_file: string }>({
+      query: ({ project_id, public_url, path_to_file }) => {
         return {
           url: `/api/v1/admin/projects/${project_id}/images`,
           method: 'POST',
-          body: { caption, ordering, public_url, file_path }
+          body: { public_url, path_to_file }
         }
       },
       invalidatesTags: ['Images', 'Projects']
