@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -36,6 +37,7 @@
     "eslint-config-prettier": "^8.10.0",
     "eslint-define-config": "^1.1.1",
     "eslint-plugin-react": "^7.33.2",
+    "gh-pages": "^6.3.0",
     "glob": "^9.3.0",
     "postcss": "^8.4.38",
     "rimraf": "^4.0.1",
