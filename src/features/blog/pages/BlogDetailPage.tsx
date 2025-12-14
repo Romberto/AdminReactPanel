@@ -35,6 +35,7 @@ export default function BlogDetailPage() {
         <h3 className="font-semibold mb-2">Images</h3>
         <BlogImageUploader
           blogId={blog.id}
+          blogSlug={blog.slug}
           onUploaded={() => refetch()}
         />
         {blog.images && blog.images.length > 0 && (
