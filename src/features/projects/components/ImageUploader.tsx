@@ -53,7 +53,7 @@ export default function ImageUploader({ projectSlug, projectId, onUploaded }: Pr
 
         // 2️⃣ Presigned URL
         const presignRes = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/v1/projects/storage/presign`,
+          `${import.meta.env.VITE_API_URL}/api/v1/admin/projects/storage/presign`,
           {
             method: 'POST',
             headers: {
@@ -79,6 +79,7 @@ export default function ImageUploader({ projectSlug, projectId, onUploaded }: Pr
           method: 'PUT',
           headers: {
             'Content-Type': 'image/webp',
+            'x-amz-acl': 'public-read'
           },
           body: webpBlob,
         })
