@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import { useUploadBlogImageMutation } from '../../../api/blogsApi'
+import convertToWebP from '../../../utils/utils'
 
 type Props = {
-  blogId: number
+  blogId: number,
+  blogSlug: string,
   onUploaded?: () => void
 }
 
-export default function BlogImageUploader({ blogId, onUploaded }: Props) {
+export default function BlogImageUploader({ blogId, blogSlug, onUploaded }: Props) {
   const [files, setFiles] = useState<File[]>([])
   const [previews, setPreviews] = useState<string[]>([])
   const [progress, setProgress] = useState<Record<string, number>>({})
   const [uploadBlogImage] = useUploadBlogImageMutation()
+  const [error, setError] = useState<string | null>(null)
 
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return
@@ -20,20 +23,76 @@ export default function BlogImageUploader({ blogId, onUploaded }: Props) {
   }
 
   const uploadAll = async () => {
+    setError(null)
+
     for (const file of files) {
-      setProgress((prev) => ({ ...prev, [file.name]: 0 }))
       try {
-        await uploadBlogImage({ blog_id: blogId, file }).unwrap()
-        setProgress((prev) => ({ ...prev, [file.name]: 100 }))
+        setProgress(p => ({ ...p, [file.name]: 5 }))
+
+        // 1️⃣ WebP
+        const webpBlob = await convertToWebP(file)
+        setProgress(p => ({ ...p, [file.name]: 25 }))
+
+        // 2️⃣ Presigned URL
+        const presignRes = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/v1/admin/blog/storage/presign`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify({
+              slug: blogSlug,
+              content_type: 'image/webp',
+            }),
+          }
+        )
+
+        if (!presignRes.ok) throw new Error('Presign failed')
+
+        const { upload_url, public_url, file_path } =
+          await presignRes.json()
+
+        setProgress(p => ({ ...p, [file.name]: 50 }))
+
+        // 3️⃣ Upload to Timeweb S3
+        const uploadRes = await fetch(upload_url, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'image/webp',
+            'x-amz-acl': 'public-read'
+          },
+          body: webpBlob,
+        })
+        
+        if (!uploadRes.ok) {
+          throw new Error(`S3 upload failed: ${uploadRes.status}`)
+        }
+        
+        setProgress(p => ({ ...p, [file.name]: 80 }))
+        
+        // 4️⃣ Save metadata — ТОЛЬКО если upload OK
+        await uploadBlogImage({
+          blog_id: blogId,
+          public_url,
+          path_to_file: file_path,
+        }).unwrap()
+        
+
+        setProgress(p => ({ ...p, [file.name]: 100 }))
       } catch (err) {
-        console.error('Upload failed', err)
-        setProgress((prev) => ({ ...prev, [file.name]: -1 }))
+        console.error(err)
+        setProgress(p => ({ ...p, [file.name]: -1 }))
+        setError(`Ошибка загрузки: ${file.name}`)
       }
     }
+
     setFiles([])
     setPreviews([])
-    onUploaded && onUploaded()
+    onUploaded?.()
   }
+
   return (
     <div className="p-2 border rounded">
       <label className="block mb-2">Upload images (multiple)</label>

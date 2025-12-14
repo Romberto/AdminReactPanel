@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useUploadImageMutation } from '../../../api/projectsApi'
+import convertToWebP from '../../../utils/utils'
 
 type Props = {
   projectSlug: string
@@ -24,20 +25,7 @@ export default function ImageUploader({ projectSlug, projectId, onUploaded }: Pr
     setError(null)
   }
 
-  // ---------- Convert to WebP ----------
-  const convertToWebP = async (file: File): Promise<Blob> => {
-    const bitmap = await createImageBitmap(file)
-    const canvas = document.createElement('canvas')
-    canvas.width = bitmap.width
-    canvas.height = bitmap.height
 
-    const ctx = canvas.getContext('2d')!
-    ctx.drawImage(bitmap, 0, 0)
-
-    return await new Promise(resolve =>
-      canvas.toBlob(blob => resolve(blob!), 'image/webp', 0.7)
-    )
-  }
 
   // ---------- Upload ----------
   const uploadAll = async () => {
@@ -48,7 +36,7 @@ export default function ImageUploader({ projectSlug, projectId, onUploaded }: Pr
         setProgress(p => ({ ...p, [file.name]: 5 }))
 
         // 1️⃣ WebP
-        const webpBlob = await convertToWebP(file)
+        const webpBlob = await convertToWebP (file)
         setProgress(p => ({ ...p, [file.name]: 25 }))
 
         // 2️⃣ Presigned URL

@@ -27,14 +27,12 @@ export const blogsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Blogs'],
     }),
-    uploadBlogImage: build.mutation<BlogsImageRead, { blog_id: number; file: File }>({
-      query: ({ blog_id, file }) => {
-        const fd = new FormData()
-        fd.append('file', file)
+    uploadBlogImage: build.mutation<BlogsImageRead, { blog_id: number; public_url: string , path_to_file: string }>({
+      query: ({ blog_id, public_url, path_to_file }) => {
         return {
           url: `/api/v1/admin/blogs/${blog_id}/images`,
           method: 'POST',
-          body: fd,
+          body: {public_url, path_to_file},
         }
       },
       invalidatesTags: ['BlogsImages', 'Blogs'],
