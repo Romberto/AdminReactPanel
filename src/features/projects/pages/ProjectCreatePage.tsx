@@ -9,7 +9,11 @@ const schema = z.object({
   title: z.string().min(1),
   slug: z.string().min(1),
   description: z.string().optional(),
-  is_published: z.boolean().optional()
+  is_published: z.boolean().optional(),
+  shot_description: z.string().optional(),
+  quadrature: z.number().optional(),
+  floors: z.number().optional(),
+  bedrooms: z.number().optional()
 })
 
 type Form = z.infer<typeof schema>
@@ -35,6 +39,11 @@ export default function ProjectCreatePage() {
         <input className="border p-2 w-full" placeholder="Title" {...register('title')} />
         <input className="border p-2 w-full" placeholder="Slug" {...register('slug')} />
         <textarea className="border p-2 w-full" placeholder="Description" {...register('description')} />
+        <textarea className="border p-2 w-full" placeholder="Shot_Description" {...register('shot_description')} />
+        <input className="border p-2 w-full" placeholder="Quadrature" {...register('quadrature')} />
+        <input className="border p-2 w-full" placeholder="Floors" {...register('floors')} />
+        <input className="border p-2 w-full" placeholder="Bedrooms" {...register('bedrooms')} />
+        
         <div>
           <label className="flex items-center gap-2">
             <input type="checkbox" {...register('is_published')} />
