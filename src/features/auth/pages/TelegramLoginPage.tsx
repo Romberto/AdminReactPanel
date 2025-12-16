@@ -40,7 +40,12 @@ export default function TelegramLoginPage() {
       <div className="p-6 bg-white rounded shadow">
         <h2 className="text-xl mb-4">Telegram Login</h2>
         <div id="tg-widget-root" />
-        {!botName && <p className="text-sm text-slate-500">Set VITE_TG_BOT=<span className="font-mono">your_bot_username</span> in .env to enable widget.</p>}
+        {!botName && (
+          <p className="text-sm text-slate-500">
+            Set VITE_TG_BOT=<span className="font-mono">your_bot_username</span>{' '}
+            in .env to enable widget.
+          </p>
+        )}
       </div>
     </div>
   )

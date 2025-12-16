@@ -15,7 +15,9 @@ const schema = z.object({
 type Form = z.infer<typeof schema>
 
 export default function BlogCreatePage() {
-  const { register, handleSubmit } = useForm<Form>({ resolver: zodResolver(schema) })
+  const { register, handleSubmit } = useForm<Form>({
+    resolver: zodResolver(schema),
+  })
   const [createBlog] = useCreateBlogMutation()
   const navigate = useNavigate()
 
@@ -32,21 +34,34 @@ export default function BlogCreatePage() {
     <div className="p-6">
       <h1 className="text-2xl mb-4">Create blog</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 max-w-lg">
-        <input className="border p-2 w-full" placeholder="Title" {...register('title')} />
-        <input className="border p-2 w-full" placeholder="Slug" {...register('slug')} />
-        <textarea className="border p-2 w-full" placeholder="Description" {...register('description')} />
+        <input
+          className="border p-2 w-full"
+          placeholder="Title"
+          {...register('title')}
+        />
+        <input
+          className="border p-2 w-full"
+          placeholder="Slug"
+          {...register('slug')}
+        />
+        <textarea
+          className="border p-2 w-full"
+          placeholder="Description"
+          {...register('description')}
+        />
         <div>
           <label className="flex items-center gap-2">
             <input type="checkbox" {...register('is_published')} />
             <span>Published</span>
           </label>
         </div>
-        <button className="bg-green-600 text-white px-4 py-2 rounded" type="submit">
+        <button
+          className="bg-green-600 text-white px-4 py-2 rounded"
+          type="submit"
+        >
           Create
         </button>
       </form>
     </div>
   )
 }
-
-

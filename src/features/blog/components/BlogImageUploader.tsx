@@ -3,12 +3,16 @@ import { useUploadBlogImageMutation } from '../../../api/blogsApi'
 import convertToWebP from '../../../utils/utils'
 
 type Props = {
-  blogId: number,
-  blogSlug: string,
+  blogId: number
+  blogSlug: string
   onUploaded?: () => void
 }
 
-export default function BlogImageUploader({ blogId, blogSlug, onUploaded }: Props) {
+export default function BlogImageUploader({
+  blogId,
+  blogSlug,
+  onUploaded,
+}: Props) {
   const [files, setFiles] = useState<File[]>([])
   const [previews, setPreviews] = useState<string[]>([])
   const [progress, setProgress] = useState<Record<string, number>>({})
@@ -19,7 +23,7 @@ export default function BlogImageUploader({ blogId, blogSlug, onUploaded }: Prop
     if (!e.target.files) return
     const f = Array.from(e.target.files)
     setFiles(f)
-    setPreviews(f.map((file) => URL.createObjectURL(file)))
+    setPreviews(f.map(file => URL.createObjectURL(file)))
   }
 
   const uploadAll = async () => {
@@ -51,8 +55,7 @@ export default function BlogImageUploader({ blogId, blogSlug, onUploaded }: Prop
 
         if (!presignRes.ok) throw new Error('Presign failed')
 
-        const { upload_url, public_url, file_path } =
-          await presignRes.json()
+        const { upload_url, public_url, file_path } = await presignRes.json()
 
         setProgress(p => ({ ...p, [file.name]: 50 }))
 
@@ -61,24 +64,23 @@ export default function BlogImageUploader({ blogId, blogSlug, onUploaded }: Prop
           method: 'PUT',
           headers: {
             'Content-Type': 'image/webp',
-            'x-amz-acl': 'public-read'
+            'x-amz-acl': 'public-read',
           },
           body: webpBlob,
         })
-        
+
         if (!uploadRes.ok) {
           throw new Error(`S3 upload failed: ${uploadRes.status}`)
         }
-        
+
         setProgress(p => ({ ...p, [file.name]: 80 }))
-        
+
         // 4️⃣ Save metadata — ТОЛЬКО если upload OK
         await uploadBlogImage({
           blog_id: blogId,
           public_url,
           path_to_file: file_path,
         }).unwrap()
-        
 
         setProgress(p => ({ ...p, [file.name]: 100 }))
       } catch (err) {
@@ -96,12 +98,7 @@ export default function BlogImageUploader({ blogId, blogSlug, onUploaded }: Prop
   return (
     <div className="p-2 border rounded">
       <label className="block mb-2">Upload images (multiple)</label>
-      <input
-        type="file"
-        multiple
-        accept="image/*"
-        onChange={handleSelect}
-      />
+      <input type="file" multiple accept="image/*" onChange={handleSelect} />
       {previews.length > 0 && (
         <div className="mt-3 grid grid-cols-4 gap-2">
           {previews.map((p, i) => (
@@ -141,4 +138,3 @@ export default function BlogImageUploader({ blogId, blogSlug, onUploaded }: Prop
     </div>
   )
 }
-

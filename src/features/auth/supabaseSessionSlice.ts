@@ -39,4 +39,3 @@ export const initSupabaseAuthListener = (dispatch: Dispatch) => {
     dispatch(setSupabaseSession(session ?? null))
   })
 }
-

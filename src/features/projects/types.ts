@@ -1,6 +1,6 @@
 export interface ImageRead {
-  id: string 
-  project_id: string 
+  id: string
+  project_id: string
   public_url: string
   caption?: string | null
   ordering: number
@@ -24,7 +24,6 @@ export interface ProjectRead {
   quadrature: number
   floors: number
   bedrooms: number
-
 }
 
 export interface ProjectCreate {
@@ -43,7 +42,7 @@ export interface ProjectUpdate {
   slug?: string
   description?: string
   is_published?: boolean
-  preview_image_id?: string  | null
+  preview_image_id?: string | null
   shot_description: string
   quadrature: number
   floors: number

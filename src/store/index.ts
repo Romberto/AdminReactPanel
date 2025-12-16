@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { authReducer } from '../features/auth/slices'
-import { supabaseSessionReducer, initSupabaseAuthListener } from '../features/auth/supabaseSessionSlice'
+import {
+  supabaseSessionReducer,
+  initSupabaseAuthListener,
+} from '../features/auth/supabaseSessionSlice'
 import { api } from '../api/base'
 
 export const store = configureStore({
@@ -10,7 +13,7 @@ export const store = configureStore({
     supabaseSession: supabaseSessionReducer,
     [api.reducerPath]: api.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(api.middleware),
 })
 

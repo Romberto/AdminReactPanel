@@ -1,13 +1,12 @@
-
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppSelector, useAppDispatch } from '../../../hooks'
 import { logout } from '../../auth/slices'
 
 const Header: React.FC = () => {
-  const token = useAppSelector((state) => state.auth.token)
-  const userId = useAppSelector((state) => state.auth.userId)
-  const isAdmin = useAppSelector((state) => state.auth.isAdmin)
+  const token = useAppSelector(state => state.auth.token)
+  const userId = useAppSelector(state => state.auth.userId)
+  const isAdmin = useAppSelector(state => state.auth.isAdmin)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 

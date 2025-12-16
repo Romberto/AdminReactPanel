@@ -19,7 +19,7 @@ export default function BlogImageGallery({ blogId, images = [] }: Props) {
   return (
     <>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
-        {images.map((img) => (
+        {images.map(img => (
           <div
             key={img.id}
             className="relative group cursor-pointer"
@@ -33,7 +33,7 @@ export default function BlogImageGallery({ blogId, images = [] }: Props) {
 
             {/* Кнопка удаления */}
             <button
-              onClick={(e) => {
+              onClick={e => {
                 e.stopPropagation()
                 handleDelete(img)
               }}
@@ -69,4 +69,3 @@ export default function BlogImageGallery({ blogId, images = [] }: Props) {
     </>
   )
 }
-

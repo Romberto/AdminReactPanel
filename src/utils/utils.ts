@@ -7,7 +7,7 @@ export default async function convertToWebP(file: File): Promise<Blob> {
   const ctx = canvas.getContext('2d')!
   ctx.drawImage(bitmap, 0, 0)
 
-  return await new Promise<Blob>((resolve) =>
-    canvas.toBlob((blob) => resolve(blob!), 'image/webp', 0.7)
+  return await new Promise<Blob>(resolve =>
+    canvas.toBlob(blob => resolve(blob!), 'image/webp', 0.7)
   )
 }

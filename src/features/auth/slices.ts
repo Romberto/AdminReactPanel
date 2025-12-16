@@ -9,7 +9,10 @@ interface AuthState {
 
 const initialState: AuthState = {
   token: typeof window !== 'undefined' ? localStorage.getItem('token') : null,
-  userId: typeof window !== 'undefined' ? Number(localStorage.getItem('userId')) || null : null,
+  userId:
+    typeof window !== 'undefined'
+      ? Number(localStorage.getItem('userId')) || null
+      : null,
   isAdmin: false,
 }
 
@@ -34,8 +37,8 @@ const slice = createSlice({
         localStorage.removeItem('token')
         localStorage.removeItem('userId')
       }
-    }
-  }
+    },
+  },
 })
 
 export const { setAuth, logout } = slice.actions

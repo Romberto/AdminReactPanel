@@ -2,9 +2,8 @@ import { useState } from 'react'
 import { ImageRead } from '../types'
 import { useDeleteImageMutation } from '../../../api/projectsApi'
 
-
 interface Props {
-  projectId: number
+  projectId: string
   images: ImageRead[]
 }
 
@@ -17,11 +16,10 @@ export default function ImageGallery({ projectId, images }: Props) {
     await deleteImage({ project_id: projectId, image_id: img.id })
   }
 
-
   return (
     <>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
-        {images.map((img) => (
+        {images.map(img => (
           <div
             key={img.id}
             className="relative group cursor-pointer"
@@ -35,7 +33,7 @@ export default function ImageGallery({ projectId, images }: Props) {
 
             {/* Кнопка удаления */}
             <button
-              onClick={(e) => {
+              onClick={e => {
                 e.stopPropagation()
                 handleDelete(img)
               }}

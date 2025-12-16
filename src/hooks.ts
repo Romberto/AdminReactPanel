@@ -7,5 +7,8 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 export function useTokenHeader() {
   const token = useSelector((s: RootState) => s.auth.token)
-  return useMemo(() => token ? { Authorization: `Bearer ${token}` } : {}, [token])
+  return useMemo(
+    () => (token ? { Authorization: `Bearer ${token}` } : {}),
+    [token]
+  )
 }

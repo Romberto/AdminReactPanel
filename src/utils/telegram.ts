@@ -1,4 +1,7 @@
-export function loadTelegramWidget(botName: string, callbackName = 'handleTelegramAuth') {
+export function loadTelegramWidget(
+  botName: string,
+  callbackName = 'handleTelegramAuth'
+) {
   const s = document.createElement('script')
   s.src = 'https://telegram.org/js/telegram-widget.js?22'
   s.setAttribute('data-telegram-login', botName)

@@ -40,7 +40,7 @@ export default function BlogDetailPage() {
         />
         {blog.images && blog.images.length > 0 && (
           <div className="grid grid-cols-3 gap-2 mt-4">
-            {blog.images.map((img) => (
+            {blog.images.map(img => (
               <div key={img.id} className="p-2 border">
                 <img
                   src={img.public_url}
@@ -58,4 +58,3 @@ export default function BlogDetailPage() {
     </div>
   )
 }
-

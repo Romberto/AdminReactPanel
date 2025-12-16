@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const ProjectCard: React.FC<{ project: ProjectRead }> = ({ project }) => {
   const previewImage =
-    project.images?.find((img) => img.is_preview === true) ||
+    project.images?.find(img => img.is_preview === true) ||
     project.images?.[0] ||
     null
   return (

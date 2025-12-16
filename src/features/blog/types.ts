@@ -20,17 +20,16 @@ export interface BlogsRead {
 }
 
 export interface BlogUpdate {
-    title?: string
-    slug?: string
-    description?: string | null
-    is_published?: boolean
-    preview_image_id?: number | null
-  }
+  title?: string
+  slug?: string
+  description?: string | null
+  is_published?: boolean
+  preview_image_id?: number | null
+}
 
-  export interface BlogCreate {
-    title: string
-    slug: string
-    description?: string
-    is_published?: boolean
-  }
-  
+export interface BlogCreate {
+  title: string
+  slug: string
+  description?: string
+  is_published?: boolean
+}

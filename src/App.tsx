@@ -9,12 +9,10 @@ import ProjectEditPage from './features/projects/pages/ProjectEditPage'
 import ProtectedRoute from './features/auth/components/ProtectedRoute'
 import Header from './features/header/components/Header'
 
-
 import BlogListPage from './features/blog/pages/BlogListPage'
 import BlogEditPage from './features/blog/pages/BlogEditPage'
 import BlogDetailPage from './features/blog/pages/BlogDetailPage'
 import BlogCreatePage from './features/blog/pages/BlogCreatePage'
-
 
 export default function App() {
   return (
@@ -63,7 +61,6 @@ export default function App() {
             }
           />
 
-
           <Route
             path="/projects/create"
             element={
@@ -101,8 +98,5 @@ export default function App() {
         </Routes>
       </div>
     </div>
-  );
-
+  )
 }
-
-

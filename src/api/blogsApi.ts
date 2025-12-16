@@ -1,25 +1,38 @@
 import { api } from './base'
-import { BlogCreate, BlogsImageRead, BlogsRead, BlogUpdate } from '../features/blog/types'
-
-
+import {
+  BlogCreate,
+  BlogsImageRead,
+  BlogsRead,
+  BlogUpdate,
+} from '../features/blog/types'
 
 export const blogsApi = api.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: build => ({
     getBlogs: build.query<
       BlogsRead[],
-      { skip?: number; limit?: number; search?: string; only_published?: boolean } | void
+      {
+        skip?: number
+        limit?: number
+        search?: string
+        only_published?: boolean
+      } | void
     >({
-      query: (params) => {
-        const query = params ? new URLSearchParams(params as any).toString() : ''
+      query: params => {
+        const query = params
+          ? new URLSearchParams(params as any).toString()
+          : ''
         return { url: `/api/v1/blog/?${query}` }
       },
       providesTags: ['Blogs'],
     }),
     getBlogBySlug: build.query<BlogsRead, string>({
-      query: (slug) => `/api/v1/blog/${slug}`,
+      query: slug => `/api/v1/blog/${slug}`,
       providesTags: ['Blogs'],
     }),
-    updateBlog: build.mutation<BlogsRead, { blog_id: number; body: BlogUpdate }>({
+    updateBlog: build.mutation<
+      BlogsRead,
+      { blog_id: number; body: BlogUpdate }
+    >({
       query: ({ blog_id, body }) => ({
         url: `/api/v1/admin/blogs/${blog_id}`,
         method: 'PUT',
@@ -27,12 +40,15 @@ export const blogsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Blogs'],
     }),
-    uploadBlogImage: build.mutation<BlogsImageRead, { blog_id: number; public_url: string , path_to_file: string }>({
+    uploadBlogImage: build.mutation<
+      BlogsImageRead,
+      { blog_id: number; public_url: string; path_to_file: string }
+    >({
       query: ({ blog_id, public_url, path_to_file }) => {
         return {
           url: `/api/v1/admin/blogs/${blog_id}/images`,
           method: 'POST',
-          body: {public_url, path_to_file},
+          body: { public_url, path_to_file },
         }
       },
       invalidatesTags: ['BlogsImages', 'Blogs'],
@@ -48,7 +64,7 @@ export const blogsApi = api.injectEndpoints({
       invalidatesTags: ['BlogsImages', 'Blogs'],
     }),
     createBlog: build.mutation<BlogsRead, BlogCreate>({
-      query: (body) => ({ url: '/api/v1/admin/blogs', method: 'POST', body }),
+      query: body => ({ url: '/api/v1/admin/blogs', method: 'POST', body }),
       invalidatesTags: ['Blogs'],
     }),
   }),
@@ -61,4 +77,3 @@ export const {
   useDeleteBlogImageMutation,
   useCreateBlogMutation,
 } = blogsApi
-

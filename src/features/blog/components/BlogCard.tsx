@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const BlogCard: React.FC<{ blog: BlogsRead }> = ({ blog }) => {
   const previewImage =
-    blog.images?.find((img) => img.is_preview === true) ||
+    blog.images?.find(img => img.is_preview === true) ||
     blog.images?.[0] ||
     null
   return (

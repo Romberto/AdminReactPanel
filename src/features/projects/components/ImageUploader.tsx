@@ -8,7 +8,11 @@ type Props = {
   onUploaded?: () => void
 }
 
-export default function ImageUploader({ projectSlug, projectId, onUploaded }: Props) {
+export default function ImageUploader({
+  projectSlug,
+  projectId,
+  onUploaded,
+}: Props) {
   const [files, setFiles] = useState<File[]>([])
   const [previews, setPreviews] = useState<string[]>([])
   const [progress, setProgress] = useState<Record<string, number>>({})
@@ -25,8 +29,6 @@ export default function ImageUploader({ projectSlug, projectId, onUploaded }: Pr
     setError(null)
   }
 
-
-
   // ---------- Upload ----------
   const uploadAll = async () => {
     setError(null)
@@ -36,7 +38,7 @@ export default function ImageUploader({ projectSlug, projectId, onUploaded }: Pr
         setProgress(p => ({ ...p, [file.name]: 5 }))
 
         // 1️⃣ WebP
-        const webpBlob = await convertToWebP (file)
+        const webpBlob = await convertToWebP(file)
         setProgress(p => ({ ...p, [file.name]: 25 }))
 
         // 2️⃣ Presigned URL
@@ -57,8 +59,7 @@ export default function ImageUploader({ projectSlug, projectId, onUploaded }: Pr
 
         if (!presignRes.ok) throw new Error('Presign failed')
 
-        const { upload_url, public_url, file_path } =
-          await presignRes.json()
+        const { upload_url, public_url, file_path } = await presignRes.json()
 
         setProgress(p => ({ ...p, [file.name]: 50 }))
 
@@ -67,24 +68,23 @@ export default function ImageUploader({ projectSlug, projectId, onUploaded }: Pr
           method: 'PUT',
           headers: {
             'Content-Type': 'image/webp',
-            'x-amz-acl': 'public-read'
+            'x-amz-acl': 'public-read',
           },
           body: webpBlob,
         })
-        
+
         if (!uploadRes.ok) {
           throw new Error(`S3 upload failed: ${uploadRes.status}`)
         }
-        
+
         setProgress(p => ({ ...p, [file.name]: 80 }))
-        
+
         // 4️⃣ Save metadata — ТОЛЬКО если upload OK
         await uploadImage({
           project_id: projectId,
           public_url,
           path_to_file: file_path,
         }).unwrap()
-        
 
         setProgress(p => ({ ...p, [file.name]: 100 }))
       } catch (err) {
