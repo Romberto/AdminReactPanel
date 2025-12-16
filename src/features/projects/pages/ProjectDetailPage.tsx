@@ -21,7 +21,7 @@ export default function ProjectDetailPage() {
   const [isPreviewImage] = useIsPreviewImagesMutation()
 
   // ⭐ локальный стейт для мгновенного отображения бордера
-  const [previewId, setPreviewId] = useState<number | null>(null)
+  const [previewId, setPreviewId] = useState<string | null>(null)
 
   // Устанавливаем previewId при загрузке
   useEffect(() => {

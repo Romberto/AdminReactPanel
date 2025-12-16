@@ -18,15 +18,15 @@ export const projectsApi = api.injectEndpoints({
       query: (body) => ({ url: '/api/v1/admin/projects', method: 'POST', body }),
       invalidatesTags: ['Projects']
     }),
-    updateProject: build.mutation<ProjectRead, { project_id: number; body: ProjectUpdate }>({
+    updateProject: build.mutation<ProjectRead, { project_id: string; body: ProjectUpdate }>({
       query: ({ project_id, body }) => ({ url: `/api/v1/admin/projects/${project_id}`, method: 'PUT', body }),
       invalidatesTags: ['Projects']
     }),
-    deleteProject: build.mutation<{ message: string }, number>({
+    deleteProject: build.mutation<{ message: string }, string>({
       query: (project_id) => ({ url: `/api/v1/admin/projects/${project_id}`, method: 'DELETE' }),
       invalidatesTags: ['Projects']
     }),
-    uploadImage: build.mutation<ImageRead, { project_id: number, public_url: string , path_to_file: string }>({
+    uploadImage: build.mutation<ImageRead, { project_id: string, public_url: string , path_to_file: string }>({
       query: ({ project_id, public_url, path_to_file }) => {
         return {
           url: `/api/v1/admin/projects/${project_id}/images`,
@@ -36,15 +36,15 @@ export const projectsApi = api.injectEndpoints({
       },
       invalidatesTags: ['Images', 'Projects']
     }),
-    deleteImage: build.mutation<{ message: string }, { project_id: number; image_id: number }>({
+    deleteImage: build.mutation<{ message: string }, { project_id: string; image_id: string }>({
       query: ({ project_id, image_id }) => ({ url: `/api/v1/admin/projects/${project_id}/images/${image_id}`, method: 'DELETE' }),
       invalidatesTags: ['Images', 'Projects']
     }),
-    reorderImages: build.mutation<{ message: string }, { project_id: number; orders: Record<number, number> }>({
+    reorderImages: build.mutation<{ message: string }, { project_id: string; orders: Record<number, number> }>({
       query: ({ project_id, orders }) => ({ url: `/api/v1/admin/projects/${project_id}/images/reorder`, method: 'POST', body: orders }),
       invalidatesTags: ['Images', 'Projects']
     }),
-    isPreviewImages: build.mutation<{ message: string }, { project_id: number; image_id: number }>({
+    isPreviewImages: build.mutation<{ message: string }, { project_id: string; image_id: string }>({
       query: ({ project_id, image_id }) => ({ url: `/api/v1/admin/projects/${project_id}/images/ispreview/${image_id}`, method: 'POST' }),
       invalidatesTags: ['Images', 'Projects']
     })

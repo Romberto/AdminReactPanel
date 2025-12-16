@@ -4,7 +4,7 @@ import convertToWebP from '../../../utils/utils'
 
 type Props = {
   projectSlug: string
-  projectId: number
+  projectId: string
   onUploaded?: () => void
 }
 
