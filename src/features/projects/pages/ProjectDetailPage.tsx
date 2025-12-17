@@ -73,7 +73,7 @@ export default function ProjectDetailPage() {
           {project.images?.map(img => (
             <div
               key={img.id}
-              className={`p-2 border ${
+              className={`p-2 border  min-w-[220px] ${
                 previewId === img.id ? 'border-4 border-yellow-400' : 'border'
               }`}
             >
@@ -115,6 +115,44 @@ export default function ProjectDetailPage() {
                   }}
                 >
                   Is preview
+                </button>
+                {/* SET GALLERY*/ }
+                <button
+                  className="text-sm text-blue-700"
+                  onClick={async () => {
+                    // 1. отправляем запрос
+                    await isPreviewImage({
+                      project_id: project.id,
+                      image_id: img.id,
+                    })
+
+                    // 2. мгновенно показываем жёлтую рамку
+                    setPreviewId(img.id)
+
+                    // 3. обновляем проект с сервера
+                    refetch()
+                  }}
+                >
+                  Is gallery
+                </button>
+                {/* SET PLAN */}
+                <button
+                  className="text-sm text-blue-700"
+                  onClick={async () => {
+                    // 1. отправляем запрос
+                    await isPreviewImage({
+                      project_id: project.id,
+                      image_id: img.id,
+                    })
+
+                    // 2. мгновенно показываем жёлтую рамку
+                    setPreviewId(img.id)
+
+                    // 3. обновляем проект с сервера
+                    refetch()
+                  }}
+                >
+                  Is plan
                 </button>
               </div>
             </div>
