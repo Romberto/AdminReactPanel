@@ -7,6 +7,8 @@ import {
   useDeleteImageMutation,
   useReorderImagesMutation,
   useIsPreviewImagesMutation,
+  useIsPlanImagesMutation,
+  useIsGalleryImagesMutation,
 } from '../../../api/projectsApi'
 import ImageUploader from '../components/ImageUploader'
 
@@ -17,15 +19,31 @@ export default function ProjectDetailPage() {
   const [deleteProject] = useDeleteProjectMutation()
   const [deleteImage] = useDeleteImageMutation()
   const [isPreviewImage] = useIsPreviewImagesMutation()
+  const [isPlanImage] = useIsPlanImagesMutation()
+  const [isGalleryImage] = useIsGalleryImagesMutation()
 
   // ⭐ локальный стейт для мгновенного отображения бордера
   const [previewId, setPreviewId] = useState<string | null>(null)
+  const [planIds, setPlanIds] = useState<string[] | null>(null)
+  const [galleryIds, setGalleryIds] = useState<string[] | null>(null)
 
   // Устанавливаем previewId при загрузке
   useEffect(() => {
     if (project?.images) {
       const previewImg = project.images.find(img => img.is_preview)
       setPreviewId(previewImg ? previewImg.id : null)
+      const planImgs = project.images.filter(Img => Img.is_plan)
+      if (planImgs.length > 0) {
+        setPlanIds(planImgs.map(img => img.id))
+      } else {
+        setPlanIds(null)
+      }
+      const gelleryImgs = project.images.filter(img => img.is_gallery)
+      if (gelleryImgs.length > 0) {
+        setGalleryIds(gelleryImgs.map(img => img.id))
+      } else {
+        setGalleryIds(null)
+      }      
     }
   }, [project])
 
@@ -37,7 +55,7 @@ export default function ProjectDetailPage() {
     await deleteProject(project.id)
     navigate('/dashboard')
   }
-
+  console.log()
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-4">
@@ -73,9 +91,13 @@ export default function ProjectDetailPage() {
           {project.images?.map(img => (
             <div
               key={img.id}
-              className={`p-2 border  min-w-[220px] ${
-                previewId === img.id ? 'border-4 border-yellow-400' : 'border'
-              }`}
+              className={`
+                p-2 min-w-[220px]
+                
+                ${planIds?.includes(img.id) ? 'border-4 border-green-400' : ''}
+                ${galleryIds?.includes(img.id) ? 'border-4 border-sky-400' : ''}
+                ${previewId === img.id ? 'border-4 border-yellow-400' : 'border'}
+              `}
             >
               <img
                 src={img.public_url}
@@ -121,13 +143,14 @@ export default function ProjectDetailPage() {
                   className="text-sm text-blue-700"
                   onClick={async () => {
                     // 1. отправляем запрос
-                    await isPreviewImage({
-                      project_id: project.id,
+                    await isGalleryImage({
                       image_id: img.id,
                     })
 
                     // 2. мгновенно показываем жёлтую рамку
-                    setPreviewId(img.id)
+                    setGalleryIds(prev =>
+                      prev ? [...prev, img.id] : [img.id]
+                    );
 
                     // 3. обновляем проект с сервера
                     refetch()
@@ -140,13 +163,14 @@ export default function ProjectDetailPage() {
                   className="text-sm text-blue-700"
                   onClick={async () => {
                     // 1. отправляем запрос
-                    await isPreviewImage({
-                      project_id: project.id,
+                    await isPlanImage({
                       image_id: img.id,
                     })
 
                     // 2. мгновенно показываем жёлтую рамку
-                    setPreviewId(img.id)
+                    setPlanIds(prev =>
+                      prev ? [...prev, img.id] : [img.id]
+                    );
 
                     // 3. обновляем проект с сервера
                     refetch()
