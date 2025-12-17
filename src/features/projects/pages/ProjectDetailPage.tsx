@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import {
   useGetProjectBySlugQuery,
   useDeleteProjectMutation,
@@ -15,9 +15,7 @@ export default function ProjectDetailPage() {
   const navigate = useNavigate()
   const { data: project, isLoading, refetch } = useGetProjectBySlugQuery(slug!)
   const [deleteProject] = useDeleteProjectMutation()
-  const [uploadImage] = useUploadImageMutation()
   const [deleteImage] = useDeleteImageMutation()
-  const [reorderImages] = useReorderImagesMutation()
   const [isPreviewImage] = useIsPreviewImagesMutation()
 
   // ⭐ локальный стейт для мгновенного отображения бордера
@@ -45,12 +43,12 @@ export default function ProjectDetailPage() {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl">{project.title}</h1>
         <div className="flex gap-2">
-          <a className="text-blue-600" href={`/dashboard`}>
+          <Link className="text-blue-600" to={`/dashboard`}>
             Home
-          </a>
-          <a className="text-blue-600" href={`/projects/${project.slug}/edit`}>
+          </Link>
+          <Link className="text-blue-600" to={`/projects/${project.slug}/edit`}>
             Edit
-          </a>
+          </Link>
           <button className="text-red-600" onClick={handleDelete}>
             Delete
           </button>
