@@ -24,7 +24,7 @@ export default function BlogDetailPage() {
       </div>
 
       <div className="mb-4">
-        <p>{blog.description}</p>
+        <p>{blog.title}</p>
         <p className="text-sm text-slate-500">Slug: {blog.slug}</p>
         <p className="text-sm text-slate-500">
           Published: {blog.is_published ? 'Yes' : 'No'}

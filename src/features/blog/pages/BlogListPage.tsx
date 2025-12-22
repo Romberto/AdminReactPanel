@@ -11,7 +11,7 @@ export default function BlogListPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl">Projects</h1>
+        <h1 className="text-2xl">Blogs</h1>
         <Link
           to="/blogs/create"
           className="bg-green-600 text-white px-3 py-2 rounded"
