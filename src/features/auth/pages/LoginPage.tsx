@@ -5,7 +5,7 @@ import * as z from 'zod'
 import { useLoginMutation } from '../../../api/authApi'
 import { useAppDispatch } from '../../../hooks'
 import { setAuth } from '../slices'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const schema = z.object({
   login: z.string().min(1),
@@ -59,9 +59,9 @@ export default function LoginPage() {
           >
             Sign in
           </button>
-          <a className="ml-auto text-sm text-blue-600" href="/login/telegram">
+          <Link className="ml-auto text-sm text-blue-600" to="/login/telegram">
             Telegram login
-          </a>
+          </Link>
         </div>
       </form>
     </div>

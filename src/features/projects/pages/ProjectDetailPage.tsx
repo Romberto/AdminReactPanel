@@ -43,7 +43,7 @@ export default function ProjectDetailPage() {
         setGalleryIds(gelleryImgs.map(img => img.id))
       } else {
         setGalleryIds(null)
-      }      
+      }
     }
   }, [project])
 
@@ -138,7 +138,7 @@ export default function ProjectDetailPage() {
                 >
                   Is preview
                 </button>
-                {/* SET GALLERY*/ }
+                {/* SET GALLERY*/}
                 <button
                   className="text-sm text-blue-700"
                   onClick={async () => {
@@ -148,9 +148,7 @@ export default function ProjectDetailPage() {
                     })
 
                     // 2. мгновенно показываем жёлтую рамку
-                    setGalleryIds(prev =>
-                      prev ? [...prev, img.id] : [img.id]
-                    );
+                    setGalleryIds(prev => (prev ? [...prev, img.id] : [img.id]))
 
                     // 3. обновляем проект с сервера
                     refetch()
@@ -168,9 +166,7 @@ export default function ProjectDetailPage() {
                     })
 
                     // 2. мгновенно показываем жёлтую рамку
-                    setPlanIds(prev =>
-                      prev ? [...prev, img.id] : [img.id]
-                    );
+                    setPlanIds(prev => (prev ? [...prev, img.id] : [img.id]))
 
                     // 3. обновляем проект с сервера
                     refetch()

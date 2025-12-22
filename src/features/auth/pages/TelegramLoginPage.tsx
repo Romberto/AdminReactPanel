@@ -10,7 +10,7 @@ export default function TelegramLoginPage() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const botName = import.meta.env.VITE_TG_BOT || ''
-
+  console.log(botName)
   useEffect(() => {
     // create global handler
     // @ts-ignore
@@ -23,6 +23,7 @@ export default function TelegramLoginPage() {
         alert('Telegram login failed')
       }
     }
+
     if (botName) {
       loadTelegramWidget(botName, 'handleTelegramAuth')
     }
@@ -38,12 +39,12 @@ export default function TelegramLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="p-6 bg-white rounded shadow">
-        <h2 className="text-xl mb-4">Telegram Login</h2>
+        <h2 className="text-xl mb-4">Telegram Login!!!</h2>
         <div id="tg-widget-root" />
         {!botName && (
           <p className="text-sm text-slate-500">
-            Set VITE_TG_BOT=<span className="font-mono">your_bot_username</span>{' '}
-            in .env to enable widget.
+            <span className="font-mono">your_bot_username</span> in .env to
+            enable widget.
           </p>
         )}
       </div>

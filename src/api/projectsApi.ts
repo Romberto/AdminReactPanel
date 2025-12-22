@@ -95,20 +95,14 @@ export const projectsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Images', 'Projects'],
     }),
-    isPlanImages: build.mutation<
-      { message: string },
-      { image_id: string }
-    >({
+    isPlanImages: build.mutation<{ message: string }, { image_id: string }>({
       query: ({ image_id }) => ({
         url: `/api/v1/admin/projects/images/isplan/${image_id}`,
         method: 'POST',
       }),
       invalidatesTags: ['Images'],
     }),
-    isGalleryImages: build.mutation<
-      { message: string },
-      { image_id: string }
-    >({
+    isGalleryImages: build.mutation<{ message: string }, { image_id: string }>({
       query: ({ image_id }) => ({
         url: `/api/v1/admin/projects/images/isgallery/${image_id}`,
         method: 'POST',
@@ -129,5 +123,5 @@ export const {
   useReorderImagesMutation,
   useIsPreviewImagesMutation,
   useIsGalleryImagesMutation,
-  useIsPlanImagesMutation
+  useIsPlanImagesMutation,
 } = projectsApi

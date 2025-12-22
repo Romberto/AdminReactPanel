@@ -10,7 +10,9 @@ export const api = createApi({
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token
+      const refresh = (getState() as RootState).auth.refresh
       if (token) headers.set('Authorization', `Bearer ${token}`)
+
       return headers
     },
   }),
