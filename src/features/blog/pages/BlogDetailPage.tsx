@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   useDeleteBlogImageMutation,
+  useDeleteBlogMutation,
   useGetBlogBySlugQuery,
 } from '../../../api/blogsApi'
 import BlogImageUploader from '../components/BlogImageUploader'
@@ -12,7 +13,7 @@ export default function BlogDetailPage() {
   const [selected, setSelected] = useState<string | null>(null)
   const { data: blog, isLoading, refetch } = useGetBlogBySlugQuery(slug!)
   const [deleteImage] = useDeleteBlogImageMutation()
-  const [deleteBlog] = useDeleteBlogImageMutation()
+  const [deleteBlog] = useDeleteBlogMutation()
 
   if (isLoading) return <div>Loading...</div>
   if (!blog) return <div>Not found</div>
@@ -25,7 +26,7 @@ export default function BlogDetailPage() {
   const handleDeleteBlog = async () => {
     if (!confirm('Delete project?')) return
     await deleteBlog({ blog_id: blog.id })
-    navigate('/dashboard')
+    navigate('/blogs')
   }
 
   return (
