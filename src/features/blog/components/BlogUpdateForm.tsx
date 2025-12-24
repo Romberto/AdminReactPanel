@@ -1,14 +1,14 @@
 import { UseFormRegister } from 'react-hook-form'
 
-import { BlogFormValues } from '../BlogForm.shemas'
+import { BlogFormValues, BlogUpdateFormValues } from '../BlogForm.shemas'
 
 type Props = {
-  register: UseFormRegister<BlogFormValues> 
+  register: UseFormRegister<BlogUpdateFormValues> 
   onSubmit: React.FormEventHandler<HTMLFormElement>
 }
 
 
-export function BlogForm({ register, onSubmit }: Props) {
+export function BlogUpdateForm({ register, onSubmit }: Props) {
 
   return (
     <form
@@ -26,17 +26,6 @@ export function BlogForm({ register, onSubmit }: Props) {
 
       </div>
 
-      {/* Slug */}
-      <div>
-        <label className="block text-sm font-medium mb-1">Slug *</label>
-        <input
-          {...(register && register('slug'))}
-          className="w-full rounded-lg border px-4 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-black"
-          placeholder="primer-stati"
-        />
-
-        <p className="text-xs text-gray-500 mt-1">Используется в URL</p>
-      </div>
 
       {/* Excerpt */}
       <div>
