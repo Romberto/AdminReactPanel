@@ -3,17 +3,15 @@ import type { BlogsRead } from '../types'
 import { Link } from 'react-router-dom'
 
 const BlogCard: React.FC<{ blog: BlogsRead }> = ({ blog }) => {
-  const previewImage =
-    blog.images?.find(img => img.is_preview === true) ||
-    blog.images?.[0] ||
-    null
+  const previewImage = blog.public_url || null
+
   return (
     <div className="border rounded shadow hover:shadow-md overflow-hidden">
       <Link to={`/blogs/${blog.slug}/edit`}>
         <div className="h-48 bg-slate-100 flex items-center justify-center">
           {previewImage ? (
             <img
-              src={previewImage.public_url}
+              src={previewImage}
               alt={blog.title}
               className="h-full w-full object-cover"
             />

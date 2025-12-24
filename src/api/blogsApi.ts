@@ -41,26 +41,30 @@ export const blogsApi = api.injectEndpoints({
     >({
       query: ({ blog_id, public_url, path_to_file }) => {
         return {
-          url: `/api/v1/admin/blogs/${blog_id}/images`,
+          url: `/api/v1/admin/blog/${blog_id}/images`,
           method: 'POST',
           body: { public_url, path_to_file },
         }
       },
       invalidatesTags: ['BlogsImages', 'Blogs'],
     }),
-    deleteBlogImage: build.mutation<
-      { message: string },
-      { blog_id: string; image_id: string }
-    >({
-      query: ({ blog_id, image_id }) => ({
-        url: `/api/v1/admin/blogs/${blog_id}/images/${image_id}`,
+    deleteBlogImage: build.mutation<{ message: string }, { blog_id: string }>({
+      query: ({ blog_id }) => ({
+        url: `/api/v1/admin/blogs/${blog_id}/images`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['BlogsImages', 'Blogs'],
+      invalidatesTags: ['Blogs'],
     }),
     createBlog: build.mutation<BlogsRead, BlogCreate>({
       query: body => ({ url: '/api/v1/admin/blogs', method: 'POST', body }),
       invalidatesTags: ['Blogs'],
+    }),
+    deleteBlog: build.mutation<{ message: string }, { blog_id: string }>({
+      query: ({ blog_id }) => ({
+        url: `/api/v1/admin/blogs/${blog_id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Projects'],
     }),
   }),
 })
@@ -71,4 +75,5 @@ export const {
   useUploadBlogImageMutation,
   useDeleteBlogImageMutation,
   useCreateBlogMutation,
+  useDeleteBlogMutation,
 } = blogsApi
