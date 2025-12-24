@@ -81,7 +81,6 @@ export default function BlogEditPage() {
           Save
         </button>
       </form>
-      <BlogImageGallery blogId={blog.id} images={blog.images} />
     </div>
   )
 }

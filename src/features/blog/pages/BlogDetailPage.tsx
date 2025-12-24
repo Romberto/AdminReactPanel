@@ -38,22 +38,7 @@ export default function BlogDetailPage() {
           blogSlug={blog.slug}
           onUploaded={() => refetch()}
         />
-        {blog.images && blog.images.length > 0 && (
-          <div className="grid grid-cols-3 gap-2 mt-4">
-            {blog.images.map(img => (
-              <div key={img.id} className="p-2 border">
-                <img
-                  src={img.public_url}
-                  alt={blog.title}
-                  className="w-full h-40 object-cover"
-                />
-                {img.is_preview && (
-                  <p className="text-xs text-yellow-600 mt-1">Preview</p>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
+
       </div>
     </div>
   )

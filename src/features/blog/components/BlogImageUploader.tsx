@@ -3,7 +3,7 @@ import { useUploadBlogImageMutation } from '../../../api/blogsApi'
 import convertToWebP from '../../../utils/utils'
 
 type Props = {
-  blogId: number
+  blogId: string
   blogSlug: string
   onUploaded?: () => void
 }

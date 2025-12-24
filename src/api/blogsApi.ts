@@ -1,7 +1,6 @@
 import { api } from './base'
 import {
   BlogCreate,
-  BlogsImageRead,
   BlogsRead,
   BlogUpdate,
 } from '../features/blog/types'
@@ -31,7 +30,7 @@ export const blogsApi = api.injectEndpoints({
     }),
     updateBlog: build.mutation<
       BlogsRead,
-      { blog_id: number; body: BlogUpdate }
+      { blog_id: string; body: BlogUpdate }
     >({
       query: ({ blog_id, body }) => ({
         url: `/api/v1/admin/blogs/${blog_id}`,
@@ -41,8 +40,8 @@ export const blogsApi = api.injectEndpoints({
       invalidatesTags: ['Blogs'],
     }),
     uploadBlogImage: build.mutation<
-      BlogsImageRead,
-      { blog_id: number; public_url: string; path_to_file: string }
+      { message: string },
+      { blog_id: string; public_url: string; path_to_file: string }
     >({
       query: ({ blog_id, public_url, path_to_file }) => {
         return {
@@ -55,7 +54,7 @@ export const blogsApi = api.injectEndpoints({
     }),
     deleteBlogImage: build.mutation<
       { message: string },
-      { blog_id: number; image_id: number }
+      { blog_id: string; image_id: string }
     >({
       query: ({ blog_id, image_id }) => ({
         url: `/api/v1/admin/blogs/${blog_id}/images/${image_id}`,
