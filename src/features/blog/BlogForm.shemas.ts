@@ -18,4 +18,3 @@ export const blogUpdateFormSchema = z.object({
 })
 
 export type BlogUpdateFormValues = z.infer<typeof blogUpdateFormSchema>
-

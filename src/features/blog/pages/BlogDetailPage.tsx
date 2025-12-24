@@ -24,13 +24,13 @@ export default function BlogDetailPage() {
       </div>
 
       <div className="mb-4">
+        <p>Работа с изображением</p>
         <p>{blog.title}</p>
         <p className="text-sm text-slate-500">Slug: {blog.slug}</p>
         <p className="text-sm text-slate-500">
           Published: {blog.is_published ? 'Yes' : 'No'}
         </p>
       </div>
-
       <div className="mb-6">
         <h3 className="font-semibold mb-2">Images</h3>
         <BlogImageUploader
@@ -38,8 +38,14 @@ export default function BlogDetailPage() {
           blogSlug={blog.slug}
           onUploaded={() => refetch()}
         />
-
       </div>
+      {blog.public_url && (
+        <img
+          src={`${blog.public_url}`}
+          alt={blog.public_url || ''}
+          className="w-full h-40 object-cover rounded-lg shadow-sm"
+        />
+      )}
     </div>
   )
 }

@@ -3,16 +3,14 @@ import { UseFormRegister } from 'react-hook-form'
 import { BlogFormValues } from '../BlogForm.shemas'
 
 type Props = {
-  register: UseFormRegister<BlogFormValues> 
+  register: UseFormRegister<BlogFormValues>
   onSubmit: React.FormEventHandler<HTMLFormElement>
 }
 
-
 export function BlogForm({ register, onSubmit }: Props) {
-
   return (
     <form
-      onSubmit={(onSubmit)}
+      onSubmit={onSubmit}
       className="max-w-3xl mx-auto space-y-8 bg-white p-6 rounded-xl shadow-sm"
     >
       {/* Title */}
@@ -23,7 +21,6 @@ export function BlogForm({ register, onSubmit }: Props) {
           className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
           placeholder="Название статьи"
         />
-
       </div>
 
       {/* Slug */}
@@ -77,7 +74,8 @@ export function BlogForm({ register, onSubmit }: Props) {
         <button
           type="submit"
           className="rounded-lg bg-black px-6 py-2 text-white hover:bg-black/90 disabled:opacity-50"
-        >Сохранить
+        >
+          Сохранить
         </button>
       </div>
     </form>

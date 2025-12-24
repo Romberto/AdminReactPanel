@@ -1,5 +1,3 @@
-
-
 export interface BlogsRead {
   id: string
   title: string
@@ -10,7 +8,6 @@ export interface BlogsRead {
   created_at: string
   updated_at: string
   public_url: string
-
 }
 
 export interface BlogUpdate {

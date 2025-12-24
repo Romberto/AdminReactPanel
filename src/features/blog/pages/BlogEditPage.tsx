@@ -10,7 +10,6 @@ import { blogUpdateFormSchema, BlogUpdateFormValues } from '../BlogForm.shemas'
 import { BlogForm } from '../components/BlogForm'
 import { BlogUpdateForm } from '../components/BlogUpdateForm'
 
-
 export default function BlogEditPage() {
   const { slug } = useParams<{ slug: string }>()
   const { data: blog } = useGetBlogBySlugQuery(slug!)
@@ -26,14 +25,14 @@ export default function BlogEditPage() {
         title: blog.title,
         is_published: blog.is_published,
         article: blog.article,
-        excerpt: blog.excerpt
+        excerpt: blog.excerpt,
       })
   }, [blog, reset])
 
   const onSubmit = async (data: BlogUpdateFormValues) => {
     try {
       await updateBlog({ blog_id: blog!.id, body: data as any }).unwrap()
-      navigate(`/blogs/${ blog!.slug}`)
+      navigate(`/blogs/${blog!.slug}`)
     } catch (err) {
       alert('Update failed')
     }

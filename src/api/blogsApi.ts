@@ -1,9 +1,5 @@
 import { api } from './base'
-import {
-  BlogCreate,
-  BlogsRead,
-  BlogUpdate,
-} from '../features/blog/types'
+import { BlogCreate, BlogsRead, BlogUpdate } from '../features/blog/types'
 
 export const blogsApi = api.injectEndpoints({
   endpoints: build => ({
